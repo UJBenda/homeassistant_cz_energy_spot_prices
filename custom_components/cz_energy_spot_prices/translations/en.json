@@ -52,6 +52,24 @@
             },
             "sell_electricity_is_cheapest_hours_block": {
                 "name": "Current Sell Electricity is Cheapest {hours} Hours Block"
+            },
+            "spot_electricity_is_most_expensive": {
+                "name": "Current Spot Electricity is Most Expensive"
+            },
+            "spot_electricity_is_most_expensive_hours_block": {
+                "name": "Current Spot Electricity is Most Expensive {hours} Hours Block"
+            },
+            "buy_electricity_is_most_expensive": {
+                "name": "Current Buy Electricity is Most Expensive"
+            },
+            "buy_electricity_is_most_expensive_hours_block": {
+                "name": "Current Buy Electricity is Most Expensive {hours} Hours Block"
+            },
+            "sell_electricity_is_most_expensive": {
+                "name": "Current Sell Electricity is Most Expensive"
+            },
+            "sell_electricity_is_most_expensive_hours_block": {
+                "name": "Current Sell Electricity is Most Expensive {hours} Hours Block"
             }
         },
         "sensor": {

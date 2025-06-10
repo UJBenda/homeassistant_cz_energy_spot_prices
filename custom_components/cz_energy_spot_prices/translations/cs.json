@@ -52,6 +52,24 @@
             },
             "sell_electricity_is_cheapest_hours_block": {
                 "name": "Aktuální blok {hours} hodin prodejních cen elektřiny je nejlevnější"
+            },
+            "spot_electricity_is_most_expensive": {
+                "name": "Aktuální spotová cena elektřiny je nejdražší"
+            },
+            "spot_electricity_is_most_expensive_hours_block": {
+                "name": "Aktuální blok {hours} hodin spotových cen elektřiny je nejdražší"
+            },
+            "buy_electricity_is_most_expensive": {
+                "name": "Aktuální nákupní cena elektřiny je nejdražší"
+            },
+            "buy_electricity_is_most_expensive_hours_block": {
+                "name": "Aktuální blok {hours} hodin nákupních cen elektřiny je nejdražší"
+            },
+            "sell_electricity_is_most_expensive": {
+                "name": "Aktuální prodejní cena elektřiny je nejdražší"
+            },
+            "sell_electricity_is_most_expensive_hours_block": {
+                "name": "Aktuální blok {hours} hodin prodejních cen elektřiny je nejdražší"
             }
         },
         "sensor": {

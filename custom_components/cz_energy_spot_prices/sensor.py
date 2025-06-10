@@ -235,7 +235,7 @@ class SpotRateElectricitySensor(ElectricityPriceSensor):
 
         try:
             hourly_rates = self._get_trade_rates(rate_data)
-            self._value = hourly_rates.current_hour.price
+            self._value = round(hourly_rates.current_hour.price, 2)
         except LookupError:
             logger.error(
                 'Current time "%s" is not found in SpotRate values:\n%s',
@@ -285,7 +285,7 @@ class HourFindSensor(ElectricityPriceSensor):
         else:
             logger.debug('%s unchanged with %.2f at %s', self.unique_id, hour.price, hour.dt_utc.isoformat())
 
-        self._value = hour.price
+        self._value = round(hour.price, 2)
         self._attr = {
             'at': hour.dt_local.isoformat(),
             'hour': hour.dt_local.hour,
@@ -474,9 +474,9 @@ class ConsecutiveCheapestElectricitySensor(ElectricityBinarySpotRateSensorBase):
             'Start hour': start.hour,
             'End': end,
             'End hour': end.hour,
-            'Min': float(min_price or 0),
-            'Max': float(max_price or 0),
-            'Mean': float(sum_price / count) if count > 0 else 0,
+            'Min': round(float(min_price or 0), 2),
+            'Max': round(float(max_price or 0), 2),
+            'Mean': round(float(sum_price / count), 2) if count > 0 else 0,
         }
 
     def update(self, rate_data: Optional[SpotRateData]):
@@ -573,8 +573,13 @@ class TodayGasSensor(GasPriceSensor):
             self._value = None
             return
 
-        self._available = True
-        self._value = self._get_trade_rates(rate_data).today
+        try:
+            price = self._get_trade_rates(rate_data).today
+            self._value = round(price, 2)
+            self._available = True
+        except LookupError:
+            self._value = None
+            self._available = False
 
 
 class TomorrowGasSensor(GasPriceSensor):
@@ -600,8 +605,13 @@ class TomorrowGasSensor(GasPriceSensor):
             self._value = None
             return
 
-        self._value = self._get_trade_rates(rate_data).tomorrow
-        self._available = self._value is not None
+        price = self._get_trade_rates(rate_data).tomorrow
+        if price is not None:
+            self._value = round(price, 2)
+            self._available = True
+        else:
+            self._value = None
+            self._available = False
 
 
 class HasTomorrowGasData(GasBinarySpotRateSensorBase):

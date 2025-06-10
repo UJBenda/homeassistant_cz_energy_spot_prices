@@ -39,6 +39,7 @@ class SpotRateHour:
         self._consecutive_sum_prices: Dict[int, Decimal] = {}
 
         self.cheapest_consecutive_order = {i: 0 for i in CONSECUTIVE_HOURS}
+        self.most_expensive_consecutive_order = {i: 0 for i in CONSECUTIVE_HOURS}
 
 
 class SpotRateDay:
@@ -116,10 +117,18 @@ class HourlySpotRateData:
             for i, hour in enumerate(sorted_today_hours, 1):
                 hour.cheapest_consecutive_order[consecutive] = i
 
+            sorted_today_hours_expensive = sorted(self.today_day.hours_by_dt.values(), key=lambda hour: hour._consecutive_sum_prices[consecutive], reverse=True)
+            for i, hour in enumerate(sorted_today_hours_expensive, 1):
+                hour.most_expensive_consecutive_order[consecutive] = i
+
             if self.tomorrow_day is not None:
                 sorted_tomorrow_hours = sorted(self.tomorrow_day.hours_by_dt.values(), key=lambda hour: hour._consecutive_sum_prices[consecutive])
                 for i, hour in enumerate(sorted_tomorrow_hours, 1):
                     hour.cheapest_consecutive_order[consecutive] = i
+
+                sorted_tomorrow_hours_expensive = sorted(self.tomorrow_day.hours_by_dt.values(), key=lambda hour: hour._consecutive_sum_prices[consecutive], reverse=True)
+                for i, hour in enumerate(sorted_tomorrow_hours_expensive, 1):
+                    hour.most_expensive_consecutive_order[consecutive] = i
 
     def hour_for_dt(self, dt: datetime) -> SpotRateHour:
         utc_hour = dt.astimezone(timezone.utc).replace(minute=0, second=0, microsecond=0)
